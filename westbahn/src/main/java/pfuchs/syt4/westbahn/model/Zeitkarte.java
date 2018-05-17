@@ -7,11 +7,6 @@ import javax.persistence.*;
 
 @Entity
 public class Zeitkarte extends Ticket implements Serializable {
-	@Id
-	public Long getId() {
-		return super.ID;
-	}
-	
 	private Date gueltigAb;
 
 	private ZeitkartenTyp typ;
@@ -26,6 +21,9 @@ public class Zeitkarte extends Ticket implements Serializable {
 
 	public ZeitkartenTyp getTyp() {
 		return typ;
+	}
+	public void setTyp(ZeitkartenTyp typ) {
+	    this.typ = typ;
 	}
 
 	@Override

@@ -4,12 +4,6 @@ import javax.persistence.*;
 
 @Entity
 public class Einzelticket extends Ticket {
-	
-	@Id
-	public long getId() {
-		return super.ID;
-	}
-	
 	@Enumerated(EnumType.ORDINAL)
 	private TicketOption ticketOption;
 

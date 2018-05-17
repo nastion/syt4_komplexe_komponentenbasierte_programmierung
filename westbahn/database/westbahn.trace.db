@@ -1,0 +1,12 @@
+05-17 16:25:09 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FETCH" not found; SQL statement:
+FROM Reservierung r INNER JOIN FETCH Benutzer b WHERE b.eMail = ? [42102-148]
+05-17 16:30:12 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FETCH" not found; SQL statement:
+FROM Reservierung r INNER JOIN FETCH Benutzer b WHERE b.eMail = ? [42102-148]
+05-17 16:31:11 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FETCH" not found; SQL statement:
+FROM Reservierung r INNER JOIN FETCH r.benutzer WHERE b.eMail = ? [42102-148]
+05-17 16:33:10 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FETCH" not found; SQL statement:
+FROM Reservierung r INNER JOIN FETCH r.benutzer WHERE b.eMail = ? [42102-148]

@@ -1,0 +1,51 @@
+05-17 16:01:03 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Column "TICKET.TICKETOPTION" not found; SQL statement:
+select ticket.DTYPE, ticket.ID, ticket.ticketOption, ticket.gueltigAb, ticket.typ, ticket.strecke_ID, reservierung.ID from reservierung left outer join benutzer on benutzer.ID = benutzer right outer join ticket on ticket.ID = benutzer.tickets_ID left outer join strecke on strecke.ID = ticket.strecke_ID where strecke.ende_ID = ? and strecke.start_ID = ? having reservierung.ID IS NULL; [42122-148]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:126)
+	at org.h2.command.dml.Select.prepare(Select.java:773)
+	at org.h2.command.Parser.prepare(Parser.java:202)
+	at org.h2.command.Parser.prepareCommand(Parser.java:214)
+	at org.h2.engine.Session.prepareLocal(Session.java:425)
+	at org.h2.engine.Session.prepareCommand(Session.java:374)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1056)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:71)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:233)
+	at org.hibernate.engine.jdbc.internal.StatementPreparerImpl$5.doPrepare(StatementPreparerImpl.java:145)
+	at org.hibernate.engine.jdbc.internal.StatementPreparerImpl$StatementPreparationTemplate.prepareStatement(StatementPreparerImpl.java:171)
+	at org.hibernate.engine.jdbc.internal.StatementPreparerImpl.prepareQueryStatement(StatementPreparerImpl.java:147)
+	at org.hibernate.loader.Loader.prepareQueryStatement(Loader.java:1985)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1915)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1893)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:938)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:341)
+	at org.hibernate.loader.Loader.doList(Loader.java:2692)
+	at org.hibernate.loader.Loader.doList(Loader.java:2675)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2507)
+	at org.hibernate.loader.Loader.list(Loader.java:2502)
+	at org.hibernate.loader.custom.CustomLoader.list(CustomLoader.java:335)
+	at org.hibernate.internal.SessionImpl.listCustomQuery(SessionImpl.java:2200)
+	at org.hibernate.internal.AbstractSharedSessionContract.list(AbstractSharedSessionContract.java:1016)
+	at org.hibernate.query.internal.NativeQueryImpl.doList(NativeQueryImpl.java:152)
+	at org.hibernate.query.internal.AbstractProducedQuery.list(AbstractProducedQuery.java:1414)
+	at pfuchs.syt4.westbahn.Main.main(Main.java:117)
+05-17 16:04:04 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "FROM RESERVIERUNG LEFT OUTER JOIN BENUTZER ON RESERVIERUNG.BENUTZER = BENUTZER.ID WHERE[*] BENUTZER.EMAIL = ? "; expected "SELECT"; SQL statement:
+FROM reservierung LEFT OUTER JOIN benutzer ON reservierung.benutzer = benutzer.ID WHERE benutzer.eMail = ? [42001-148]
+05-17 16:07:34 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "FROM RESERVIERUNG LEFT OUTER JOIN BENUTZER ON RESERVIERUNG.BENUTZER = BENUTZER.ID WHERE[*] BENUTZER.EMAIL = ? "; expected "SELECT"; SQL statement:
+FROM reservierung LEFT OUTER JOIN benutzer ON reservierung.benutzer = benutzer.ID WHERE benutzer.eMail = ? [42001-148]
+05-17 16:15:53 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "FROM RESERVIERUNG R FETCH[*] BENUTZER B ON R.BENUTZER = B.ID WHERE B.EMAIL = ? "; expected "SELECT"; SQL statement:
+FROM Reservierung r FETCH Benutzer b ON r.benutzer = b.ID WHERE b.eMail = ? [42001-148]
+05-17 16:16:55 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "FROM RESERVIERUNG R FETCH[*] BENUTZER B WHERE B.EMAIL = ? "; expected "SELECT"; SQL statement:
+FROM Reservierung r FETCH Benutzer b WHERE b.eMail = ? [42001-148]
+05-17 16:19:37 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FETCH" not found; SQL statement:
+FROM Reservierung r JOIN FETCH Benutzer b WHERE b.eMail = ? [42102-148]
+05-17 16:20:23 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FETCH" not found; SQL statement:
+FROM Reservierung r INNER JOIN FETCH Benutzer b WHERE b.eMail = ? [42102-148]

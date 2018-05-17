@@ -44,4 +44,6 @@ public class Sonderangebot {
 		this.dateIsNotInPast = !this.startZeit.before(new Date());
 	}
 
+    public Sonderangebot() {
+    }
 }

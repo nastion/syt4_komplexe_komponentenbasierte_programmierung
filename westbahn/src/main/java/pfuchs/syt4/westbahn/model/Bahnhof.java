@@ -16,7 +16,7 @@ public class Bahnhof {
 	private Long ID;
 	
 	@Size(min=2, max=150)
-	@Pattern(regexp="^[a-z A-Z0-9������-]*$", message="Ung�ltiger Name f�r den Bahnhof")
+	@Pattern(regexp="^[\\p{L} .'-]+$", message="Ungültiger Name für den Bahnhof")
 	private String name;
 	
 	private int absPreisEntfernung;

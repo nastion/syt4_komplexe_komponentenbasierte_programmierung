@@ -1,39 +1,26 @@
 package pfuchs.syt4.westbahn.model;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.annotations.AccessType;
-import org.hibernate.annotations.IndexColumn;
-import org.hibernate.validator.constraints.Email;
-
-
-@NamedNativeQueries({
-	@NamedNativeQuery(
+@NamedQueries({
+	@NamedQuery(
 		name = "getAllReservationsForEMail",
-		query = "select * from reservierung left outer join benutzer on reservierung.benutzer = benutzer.ID "
-				+ "where benutzer.eMail = :eMail",
-        resultClass = Reservierung.class
+		query = "from Reservierung r inner join fetch r.benutzer as b "
+				+ "WHERE b.eMail = :eMail"
 	),
-	@NamedNativeQuery(
+	@NamedQuery(
 		name = "getAllUsersWithMonthTicket",
-		query = "select * from benutzer natural join ticket where ticket.DTYPE = 'Zeitkarte' "
-				+ "and ticket.typ = 0",
-		resultClass = Benutzer.class
+		query = "FROM Benutzer b inner join fetch Ticket t WHERE t.DTYPE = 'Zeitkarte'"
 	),
-	@NamedNativeQuery(
+	@NamedQuery(
 		name = "getAllTicketsWithoutReservation",
-		query = "select ticket.DTYPE, ticket.ID, ticket.ticketOption, ticket.gueltigAb, ticket.typ, ticket.strecke_ID, reservierung.ID "
-				+ "from reservierung left outer join benutzer on benutzer.ID = benutzer "
-				+ "right outer join ticket on ticket.ID = benutzer.tickets_ID "
-				+ "left outer join strecke on strecke.ID = ticket.strecke_ID "
-				+ "where strecke.ende_ID = :ende and strecke.start_ID = :start having reservierung.ID IS NULL;",
-		resultClass = Ticket.class
+		query = "FROM Reservierung r LEFT JOIN FETCH Benutzer b ON b.ID = r.ID "
+				+ "RIGHT OUTER JOIN Ticket t ON t.ID = b.id "
+				+ "LEFT OUTER JOIN Strecke s ON s.ID = t.id "
+				+ "WHERE s.ende = :ende AND s.start = :start HAVING r.ID IS NULL"
 	)
 })
 
@@ -49,7 +36,7 @@ public class Benutzer implements Serializable {
 	private String nachName;
 
 	@Column(unique = true)
-	@Pattern(regexp="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/", 
+	@Pattern(regexp="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$",
 			 message = "This E-Mail must not be wrong!")
 	private String eMail;
 

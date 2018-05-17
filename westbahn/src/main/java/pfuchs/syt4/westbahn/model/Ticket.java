@@ -13,6 +13,9 @@ public abstract class Ticket {
 	
 	@Embedded
 	protected Zahlung zahlung;
+
+	@Embedded
+    private TicketOption DTYPE;
 	
 	public Ticket() {}
 	
