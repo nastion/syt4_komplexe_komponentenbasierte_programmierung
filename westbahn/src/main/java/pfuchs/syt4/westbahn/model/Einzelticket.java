@@ -15,7 +15,7 @@ public class Einzelticket extends Ticket {
 	
 	@Override
 	public String print() {
-		return "Ticket " +super.ID + " ist ein Einzelticket mit der Option " + ticketOption; 
+		return "Ticket " +super.Id + " ist ein Einzelticket mit der Option " + ticketOption;
 	}
 
 }

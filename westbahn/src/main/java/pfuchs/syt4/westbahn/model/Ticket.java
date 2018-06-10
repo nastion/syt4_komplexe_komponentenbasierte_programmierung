@@ -7,7 +7,7 @@ import javax.persistence.*;
 public abstract class Ticket {
 	@Id
 	@GeneratedValue
-    Long ID;
+    Long Id;
 
 	@OneToOne
     private Strecke strecke;

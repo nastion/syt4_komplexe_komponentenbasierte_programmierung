@@ -11,11 +11,9 @@
 
 <body>
 <div class="container">
-    <form action="#" th:action="@{/login}" method="POST" class="form-signin">
-        <input type="text" id="email" name="email"  th:placeholder="Email"
-               class="form-control" /> <br/>
-        <input type="password"  th:placeholder="Password"
-               id="password" name="password" class="form-control" /> <br />
+    <form action="#" th:action="@{/login}" th:object="${user}" method="POST" class="form-signin">
+        <input type="text" th:placeholder="Email" th:field="*{eMail}" class="form-control" /> <br/>
+        <input type="password"  th:placeholder="Password" th:field="*{passwort}" class="form-control" /> <br />
 
         <div align="center" th:if="${param.error}">
             <p style="font-size: 14pt; color: #FF1C19;">Email or Password invalid, please verify</p>

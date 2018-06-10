@@ -35,6 +35,8 @@ public class RegistrationController {
         if (benutzerRepo.findByEMail(benutzer.getEMail()) == null) {
             modelAndView.setViewName("login");
             benutzerRepo.save(benutzer);
+            benutzer = new Benutzer();
+            modelAndView.addObject("user", benutzer);
             modelAndView.addObject("success", "Successfully registered!");
         } else {
             modelAndView.setViewName("register");

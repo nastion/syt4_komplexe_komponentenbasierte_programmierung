@@ -31,7 +31,7 @@ import javax.validation.constraints.Pattern;
 public class Benutzer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	private Long Id;
 
 	@NotNull
 	private String vorName;
@@ -97,11 +97,11 @@ public class Benutzer implements Serializable {
 	}
 
     public Long getID() {
-        return ID;
+        return Id;
     }
 
     public void setID(Long ID) {
-        this.ID = ID;
+        this.Id = ID;
     }
 
     public String getVorName() {

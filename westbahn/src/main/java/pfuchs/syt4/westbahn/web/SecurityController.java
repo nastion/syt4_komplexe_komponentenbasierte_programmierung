@@ -1,4 +1,4 @@
-package pfuchs.syt4.westbahn.web;
+/*package pfuchs.syt4.westbahn.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -35,7 +36,7 @@ public class SecurityController extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/search", "/register").permitAll()
+                .antMatchers("/", "/search", "/register", "/update").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -43,7 +44,8 @@ public class SecurityController extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").and().exceptionHandling();
     }
 
     @Override
@@ -52,3 +54,4 @@ public class SecurityController extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**","/static/**","/css/**","/js/**","/images/**");
     }
 }
+*/

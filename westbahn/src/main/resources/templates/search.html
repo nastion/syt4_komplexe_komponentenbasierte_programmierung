@@ -7,25 +7,46 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/js/script.js}"></script>
 </head>
 <body>
-<table class="table table-striped container" >
-    <tr>
-        <td>
-            <label for="searchField">Eingabe filtern</label>
-            <input id="searchField" type="text" onkeyup="console.log('update table');" th:placeholder="Search" />
-        </td>
-    </tr>
-    <tr>
-        <th>Startbahnhof</th>
-        <th>Endbahnhof</th>
-        <th>Startzeit</th>
-    </tr>
-    <tr th:each="zug : ${zuege}">
-        <td th:text="${zug.start.name}"></td>
-        <td th:text="${zug.ende.name}"></td>
-        <td th:text="${zug.startZeit}"></td>
-    </tr>
-</table>
+<div class="container">
+    <table class="table table-striped container" >
+        <thead>
+        <tr>
+            <td>
+                <label for="from">Von: </label>
+                <select id="from" class="form-control" onchange="getData()">
+                    <option th:each="bahnhof : ${bahnhoefe}" th:text="${bahnhof.name}"></option>
+                </select>
+            </td>
+            <td>
+                <label for="to">Nach: </label>
+                <select id="to" class="form-control" onchange="getData()">
+                    <option th:each="bahnhof,iter : ${bahnhoefe}" th:text="${bahnhof.name}" th:selected="${iter.index}==1"></option>
+                </select>
+            </td>
+            <td th:if="${logged_in}">
+                <label for="datePicker">Am: </label>
+                <input type="date" id="datePicker" class="form-control"/>
+                <script>document.getElementById('datePicker').value = new Date().toDateInputValue();</script>
+            </td>
+        </tr>
+        <tr>
+            <th>Startbahnhof</th>
+            <th>Endbahnhof</th>
+            <th>Abfahrt</th>
+            <th>Dauer</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="data">
+            <script>
+                getData();
+            </script>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

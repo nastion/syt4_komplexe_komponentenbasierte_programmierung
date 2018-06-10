@@ -10,7 +10,7 @@ import java.util.Date;
 public class Reservierung {
     @Id
     @GeneratedValue
-	private Long ID;
+	private Long Id;
 
     @Future
 	private Date datum;
@@ -61,4 +61,72 @@ public class Reservierung {
 	public Benutzer getBenutzer() {
 		return this.benutzer;
 	}
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public Date getDatum() {
+        return datum;
+    }
+
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
+
+    public int getPraemienMeilenBonus() {
+        return praemienMeilenBonus;
+    }
+
+    public void setPraemienMeilenBonus(int praemienMeilenBonus) {
+        this.praemienMeilenBonus = praemienMeilenBonus;
+    }
+
+    public int getPreis() {
+        return preis;
+    }
+
+    public void setPreis(int preis) {
+        this.preis = preis;
+    }
+
+    public StatusInfo getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusInfo status) {
+        this.status = status;
+    }
+
+    public Zug getZug() {
+        return zug;
+    }
+
+    public void setZug(Zug zug) {
+        this.zug = zug;
+    }
+
+    public Strecke getStrecke() {
+        return strecke;
+    }
+
+    public void setStrecke(Strecke strecke) {
+        this.strecke = strecke;
+    }
+
+    public void setBenutzer(Benutzer benutzer) {
+        this.benutzer = benutzer;
+    }
+
+    public Zahlung getZahlung() {
+        return zahlung;
+    }
+
+    public void setZahlung(Zahlung zahlung) {
+        this.zahlung = zahlung;
+    }
 }

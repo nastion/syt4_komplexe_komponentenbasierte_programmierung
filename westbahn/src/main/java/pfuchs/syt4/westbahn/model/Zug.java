@@ -12,7 +12,7 @@ public class Zug {
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
-	private Long ID;
+	private Long Id;
 
 	private Date startZeit;
 
@@ -32,11 +32,11 @@ public class Zug {
 	private Bahnhof ende;
 
     public Long getID() {
-        return ID;
+        return Id;
     }
 
     public void setID(Long ID) {
-        this.ID = ID;
+        this.Id = ID;
     }
 
     public Date getStartZeit() {

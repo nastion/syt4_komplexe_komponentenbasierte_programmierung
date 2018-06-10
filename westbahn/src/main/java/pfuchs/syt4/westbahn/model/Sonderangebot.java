@@ -10,7 +10,7 @@ import javax.validation.constraints.AssertTrue;
 public class Sonderangebot {
 	@Id
 	@GeneratedValue()
-	private Long ID;
+	private Long Id;
 
     private int kontingent = 999;
 
@@ -46,11 +46,11 @@ public class Sonderangebot {
     }
 
     public Long getID() {
-        return ID;
+        return Id;
     }
 
     public void setID(Long ID) {
-        this.ID = ID;
+        this.Id = ID;
     }
 
     public int getKontingent() {

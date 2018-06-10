@@ -1,0 +1,7 @@
+<tr th:each="zug : ${zuege}" xmlns:th="http://www.thymeleaf.org">
+    <td th:text="${strecke.start.name}"></td>
+    <td th:text="${strecke.ende.name}"></td>
+    <td th:text="${abfahrt}"></td>
+    <td th:text="${dauer}"></td>
+    <td><a th:href="@{/shop}">Bestellen</a></td>
+</tr>
