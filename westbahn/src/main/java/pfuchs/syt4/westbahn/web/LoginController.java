@@ -42,4 +42,10 @@ public class LoginController {
         }
         return "redirect:login?error";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        controller.logout();
+        return "redirect:";
+    }
 }
