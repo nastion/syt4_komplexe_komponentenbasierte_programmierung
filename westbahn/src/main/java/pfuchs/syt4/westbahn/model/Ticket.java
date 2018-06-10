@@ -2,7 +2,8 @@ package pfuchs.syt4.westbahn.model;
 
 import javax.persistence.*;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Ticket {
 	@Id
 	@GeneratedValue

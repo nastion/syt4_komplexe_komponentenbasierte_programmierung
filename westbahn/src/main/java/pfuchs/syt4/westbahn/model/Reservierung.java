@@ -31,7 +31,7 @@ public class Reservierung {
 	@OneToOne
 	private Benutzer benutzer;
 
-	@OneToOne
+	@Embedded
 	private Zahlung zahlung;
 
 	public Reservierung() {}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<table class="table table-striped container" >
+    <tr>
+        <td>
+            <label for="searchField">Eingabe filtern</label>
+            <input id="searchField" type="text" onkeyup="console.log('update table');" th:placeholder="Search" />
+        </td>
+    </tr>
+    <tr>
+        <th>Startbahnhof</th>
+        <th>Endbahnhof</th>
+        <th>Startzeit</th>
+    </tr>
+    <tr th:each="zug : ${zuege}">
+        <td th:text="${zug.start.name}"></td>
+        <td th:text="${zug.ende.name}"></td>
+        <td th:text="${zug.startZeit}"></td>
+    </tr>
+</table>
+</body>
+</html>
