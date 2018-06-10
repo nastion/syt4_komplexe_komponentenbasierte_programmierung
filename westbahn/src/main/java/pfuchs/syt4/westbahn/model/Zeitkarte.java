@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Zeitkarte extends Ticket implements Serializable {
 	private Date gueltigAb;
 
+	@Enumerated
 	private ZeitkartenTyp typ;
 	
 	public Zeitkarte() {}

@@ -3,6 +3,7 @@ package pfuchs.syt4.westbahn.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @NamedQueries({
@@ -31,15 +32,19 @@ public class Benutzer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long ID;
 
+	@NotNull
 	private String vorName;
 
+	@NotNull
 	private String nachName;
 
+	@NotNull
 	@Column(unique = true)
 	@Pattern(regexp="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$",
 			 message = "This E-Mail must not be wrong!")
 	private String eMail;
 
+	@NotNull
 	private String passwort;
 
 	private String smsNummer;

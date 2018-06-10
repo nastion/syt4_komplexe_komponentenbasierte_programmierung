@@ -2,17 +2,17 @@ package pfuchs.syt4.westbahn.model;
 
 import javax.persistence.*;
 
-@Entity
+@MappedSuperclass
 public abstract class Ticket {
 	@Id
 	@GeneratedValue
-	protected Long ID;
+    Long ID;
 
 	@OneToOne
-	protected Strecke strecke;
+    private Strecke strecke;
 	
 	@Embedded
-	protected Zahlung zahlung;
+    private Zahlung zahlung;
 
 	@Embedded
     private TicketOption DTYPE;

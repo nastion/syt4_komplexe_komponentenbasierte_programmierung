@@ -1,24 +1,37 @@
 package pfuchs.syt4.westbahn.model;
 
+import org.hibernate.annotations.NaturalId;
+
+import javax.persistence.*;
+import javax.validation.constraints.Future;
 import java.util.Date;
 
+@Entity
 public class Reservierung {
+    @Id
+    @GeneratedValue
 	private Long ID;
 
+    @Future
 	private Date datum;
 
 	private int praemienMeilenBonus = 15;
 
 	private int preis = 150;
 
+	@Enumerated
 	private StatusInfo status;
 
+	@ManyToOne
 	private Zug zug;
 
+	@ManyToOne
 	private Strecke strecke;
 
+	@OneToOne
 	private Benutzer benutzer;
-	
+
+	@OneToOne
 	private Zahlung zahlung;
 
 	public Reservierung() {}

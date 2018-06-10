@@ -2,10 +2,7 @@ package pfuchs.syt4.westbahn.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
 
 @Entity
@@ -26,7 +23,7 @@ public class Sonderangebot {
 
 	private float preisNachlass = 0.5f;
 
-	@ManyToOne
+	@OneToMany
 	private Ticket tickets;
 
 	public Sonderangebot(Date startZeit) {
