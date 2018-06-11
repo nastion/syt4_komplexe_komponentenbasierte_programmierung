@@ -17,13 +17,13 @@
         <tr>
             <td>
                 <label for="from">Von: </label>
-                <select id="from" class="form-control" onchange="getData()">
+                <select id="from" class="form-control" onchange="getData('/update/search', 'data')">
                     <option th:each="bahnhof : ${bahnhoefe}" th:text="${bahnhof.name}"></option>
                 </select>
             </td>
             <td>
                 <label for="to">Nach: </label>
-                <select id="to" class="form-control" onchange="getData()">
+                <select id="to" class="form-control" onchange="getData('/update/search', 'data')">
                     <option th:each="bahnhof,iter : ${bahnhoefe}" th:text="${bahnhof.name}" th:selected="${iter.index}==1"></option>
                 </select>
             </td>
@@ -43,7 +43,7 @@
         </thead>
         <tbody id="data">
             <script>
-                getData();
+                getData('/update/search', 'data');
             </script>
         </tbody>
     </table>

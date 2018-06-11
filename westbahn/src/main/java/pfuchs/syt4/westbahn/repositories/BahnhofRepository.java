@@ -6,5 +6,5 @@ import pfuchs.syt4.westbahn.model.Bahnhof;
 
 @Repository
 public interface BahnhofRepository extends JpaRepository<Bahnhof, Long> {
-
+    Bahnhof findByName(String name);
 }

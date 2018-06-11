@@ -10,8 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Zug {	
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 
 	private Date startZeit;
@@ -31,12 +30,12 @@ public class Zug {
 	@OneToOne
 	private Bahnhof ende;
 
-    public Long getID() {
+    public Long getId() {
         return Id;
     }
 
-    public void setID(Long ID) {
-        this.Id = ID;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
     public Date getStartZeit() {

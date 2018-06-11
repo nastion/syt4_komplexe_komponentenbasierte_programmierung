@@ -1,0 +1,7 @@
+.nav-link.active {
+    border-bottom: 5px solid olivedrab;
+}
+
+.nav-link {
+    margin: auto;
+}

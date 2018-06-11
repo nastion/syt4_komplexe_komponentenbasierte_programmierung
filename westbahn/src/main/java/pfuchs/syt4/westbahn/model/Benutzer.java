@@ -1,6 +1,7 @@
 package pfuchs.syt4.westbahn.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -52,11 +53,11 @@ public class Benutzer implements Serializable {
 
 	private Long verbuchtePraemienMeilen;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<Ticket> tickets;
 	
 	public Benutzer() {
-		
+		this.tickets = new HashSet<>();
 	}
 	
 	public Benutzer(String vorName, String nachName, String eMail) {
@@ -158,5 +159,9 @@ public class Benutzer implements Serializable {
 
     public void setTickets(Set<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public void addTicket(Ticket ticket) {
+	    this.tickets.add(ticket);
     }
 }

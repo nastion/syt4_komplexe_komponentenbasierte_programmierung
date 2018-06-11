@@ -13,7 +13,7 @@ import pfuchs.syt4.westbahn.repositories.BahnhofRepository;
 import pfuchs.syt4.westbahn.repositories.ZugRepository;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 @Controller
 public class SearchController {
@@ -59,12 +59,10 @@ public class SearchController {
         return modelAndView;
     }
 
-    @GetMapping("/update")
+    @GetMapping("/update/search")
     public String update(@RequestParam(name="from") String from,
                          @RequestParam(name="to") String to,
-                         @RequestParam(name="date", required = false) String date,
                          Model model) {
-        System.out.println(date);
         int indexFrom = -1;
         int indexTo = -1;
         for (int i = 0; i < repo.findAll().size(); ++i)
@@ -72,22 +70,26 @@ public class SearchController {
                 indexFrom = i;
             else if (repo.findAll().get(i).getName().equalsIgnoreCase(to))
                 indexTo = i;
-        Zug z;
+        Set<Zug> zuege;
         if (indexFrom < indexTo)
-            z = zugRepo.findAll().get(0);
-        else z = zugRepo.findAll().get(1);
+            zuege = zugRepo.findAllFromWien();
+        else zuege = zugRepo.findAllFromSalzburg();
 
         Strecke strecke = new Strecke(repo.findAll().get(indexFrom), repo.findAll().get(indexTo));
 
-        Date zeitpunkt = new Date(z.getStartZeit().getTime()+
-                Math.abs(z.getStart().getAbsZeitEntfernung()-strecke.getStart().getAbsZeitEntfernung())*60000);
-
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        model.addAttribute("abfahrt", sdf.format(zeitpunkt));
-        int dauer = Math.abs(strecke.getStart().getAbsZeitEntfernung()-strecke.getEnde().getAbsZeitEntfernung());
-        model.addAttribute("dauer",
-                dauer/60 + ":"+((dauer%60<10)?"0"+dauer%60:dauer%60));
-        model.addAttribute("zuege", z);
+        List<String> abfahrten = new LinkedList<>();
+        List<String> dauern = new LinkedList<>();
+        for (Zug z : zuege) {
+            Date zeitpunkt = new Date(z.getStartZeit().getTime()+
+                    Math.abs(z.getStart().getAbsZeitEntfernung()-strecke.getStart().getAbsZeitEntfernung())*60000);
+            abfahrten.add(sdf.format(zeitpunkt));
+            int dauer = Math.abs(strecke.getStart().getAbsZeitEntfernung()-strecke.getEnde().getAbsZeitEntfernung());
+            dauern.add(dauer/60 + ":"+((dauer%60<10)?"0"+dauer%60:dauer%60));
+        }
+        model.addAttribute("abfahrten", abfahrten);
+        model.addAttribute("dauern", dauern);
+        model.addAttribute("zuege", zuege);
         model.addAttribute("strecke", strecke);
         return "update";
     }

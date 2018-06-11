@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}"></script>
+</head>
+<body>
+<div class="container">
+    <nav class="nav">
+        <a class="nav-link"
+           th:classappend="${param.reservierung==null && param.zeitkarte==null}?active"
+           href="?ticket">Einzelticket</a>
+        <a class="nav-link" th:classappend="${param.reservierung}?active" href="?reservierung">Reservierung</a>
+        <a class="nav-link" th:classappend="${param.zeitkarte}?active" href="?zeitkarte">Zeitkarte</a>
+    </nav>
+    <form th:action="@{/shop/confirm}" method="get" class="">
+        <table class="table table-striped">
+            <tr>
+                <th>Von</th>
+                <th>Nach</th>
+                <th th:if="${param.zeitkarte==null && param.reservierung==null}">Anzahl Tickets</th>
+                <th th:if="${param.zeitkarte==null && param.reservierung==null}">Optionen</th>
+                <th th:if="${param.reservierung}">Art der Reservierung</th>
+                <th th:if="${param.reservierung}">Reisetag</th>
+                <th th:if="${param.reservierung}">Zug</th>
+                <th th:if="${param.zeitkarte}">Zeitraum</th>
+            </tr>
+            <tr>
+                <td th:if="${strecke}">
+                    <label th:text="${strecke.start.name}"></label>
+                    <input type="text" name="from" id="from" style="display: none" th:value="${strecke.start.name}" />
+                </td>
+                <td th:if="!${strecke}">
+                    <select id="from" name="from" th:if="${param.reservierung}" class="form-control"
+                            onchange="disableOptions(document.getElementById('to'), document.getElementById('from')); getData('/update/shop', 'zuege')">
+                        <option th:each="bahnhof : ${bahnhoefe}" th:text="${bahnhof.name}"></option>
+                    </select>
+                    <select id="from" name="from" class="form-control" th:if="${param.reservierung == null}"
+                            onchange="disableOptions(document.getElementById('to'), document.getElementById('from'))">
+                        <option th:each="bahnhof : ${bahnhoefe}" th:text="${bahnhof.name}"></option>
+                    </select>
+                </td>
+                <td th:if="${strecke}">
+                    <label th:text="${strecke.ende.name}"></label>
+                    <input type="text" name="to" id="to" style="display: none" th:value="${strecke.ende.name}" />
+                </td>
+                <td th:if="${strecke==null}">
+                    <select id="to" name="to" class="form-control" th:if="${param.reservierung}"
+                            onchange="disableOptions(document.getElementById('to'), document.getElementById('from'));getData('/update/shop', 'zuege')">
+                        <option th:each="bahnhof,iter : ${bahnhoefe}" th:text="${bahnhof.name}" th:selected="${iter.index==1}"></option>
+                    </select>
+                    <select id="to" name="to" class="form-control" th:if="${param.reservierung==null}"
+                            onchange="disableOptions(document.getElementById('to'), document.getElementById('from'));">
+                        <option th:each="bahnhof,iter : ${bahnhoefe}" th:text="${bahnhof.name}" th:selected="${iter.index==1}"></option>
+                    </select>
+                </td>
+
+                <!-- Einzelticket -->
+                <td th:if="${param.zeitkarte==null && param.reservierung==null}">
+                    <input id="amount" name="amount" type="number" class="form-control" min="0" max="20" value="1" /></td>
+                <td th:if="${param.zeitkarte==null && param.reservierung==null}">
+                    <div th:each="option : ${T(pfuchs.syt4.westbahn.model.TicketOption).values()}">
+                        <input th:id="${option}" name="ticketOption" type="radio" />
+                        <label th:for="${option}" th:text="${option}"></label>
+                    </div>
+                </td>
+
+                <!-- Reservierung -->
+                <td th:if="${param.reservierung}" >
+                    <select id="resart" name="resart" class="form-control" onchange="getData('/update/shop', 'zuege')">
+                        <option th:text="${option}"
+                                th:each="option : ${T(pfuchs.syt4.westbahn.model.Reservierungsart).values()}">
+                        </option>
+                    </select>
+                </td>
+                <td th:if="${param.reservierung}">
+                    <input type="date" name="date" id="datePicker" onchange="getData('/update/shop', 'zuege')" />
+                    <script>document.getElementById('datePicker').value = new Date().toDateInputValue();</script>
+                </td>
+                <td id="zuege" th:if="${param.reservierung}">
+                    <script>
+                        getData('/update/shop', 'zuege');
+                    </script>
+                </td>
+
+                <!-- Zeitkarte -->
+                <td th:if="${param.zeitkarte}">
+                    <select id="zeitopt" name="zeitopt">
+                        <option th:text="${option}"
+                                th:each="option : ${T(pfuchs.syt4.westbahn.model.ZeitkartenTyp).values()}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" class="ml-auto" value="Zum Warenkorb hinzufügen" />
+    </form>
+</div>
+</body>
+</html>

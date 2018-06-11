@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Ticket {
 	@Id
-	@GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long Id;
 
 	@OneToOne
@@ -14,9 +14,6 @@ public abstract class Ticket {
 	
 	@Embedded
     private Zahlung zahlung;
-
-	@Embedded
-    private TicketOption DTYPE;
 	
 	public Ticket() {}
 	
@@ -26,4 +23,28 @@ public abstract class Ticket {
 	}
 
 	public abstract String print();
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public Strecke getStrecke() {
+        return strecke;
+    }
+
+    public void setStrecke(Strecke strecke) {
+        this.strecke = strecke;
+    }
+
+    public Zahlung getZahlung() {
+        return zahlung;
+    }
+
+    public void setZahlung(Zahlung zahlung) {
+        this.zahlung = zahlung;
+    }
 }
