@@ -96,7 +96,6 @@ public class TicketshopController {
     @GetMapping(value = "/shop", params = "zeitkarte")
     public ModelAndView zeitkarte() {
         ModelAndView modelAndView = new ModelAndView();
-
         if (controller.is_logged_in())
             modelAndView.addObject("logged_in", true);
         modelAndView.addObject("bahnhoefe", repo.findAll());

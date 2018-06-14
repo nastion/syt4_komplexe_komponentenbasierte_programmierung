@@ -27,6 +27,7 @@ public class SearchController {
     @GetMapping(value = {"/", "/search"})
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
+        zugRepo.deleteAll();
         if (repo.findAll().size() == 0) {
             Bahnhof westbhf = new Bahnhof("Wien Westbhf", 0, 0, 0, true);
             repo.save(westbhf);
@@ -49,7 +50,6 @@ public class SearchController {
         Bahnhof westbhf = repo.findByName("Wien Westbhf");
         Bahnhof salzburg = repo.findByName("Salzburg");
 
-        zugRepo.deleteAll();
         if (zugRepo.findAll().size()==0)
             for (int i = 0; i < 7; ++i) {
                 Zug wien_salzburg = new Zug(westbhf, salzburg);
@@ -79,6 +79,7 @@ public class SearchController {
     @GetMapping("/update/search")
     public String update(@RequestParam(name="from") String from,
                          @RequestParam(name="to") String to,
+                         @RequestParam(name="date", required = false) String date,
                          Model model) {
         int indexFrom = -1;
         int indexTo = -1;
@@ -91,6 +92,16 @@ public class SearchController {
         if (indexFrom < indexTo)
             zuege = zugRepo.findAllFromWien();
         else zuege = zugRepo.findAllFromSalzburg();
+
+        List<Zug> zuegeAmTag = zugRepo.findByMatchMonthAndMatchDay(date);
+        if (date != null && !date.equals("")) {
+            Set<Zug> z2 = new HashSet<>();
+            for (Zug z : zuege)
+                if (zuegeAmTag.contains(z))
+                    z2.add(z);
+            zuege = z2;
+        }
+
 
         Strecke strecke = new Strecke(repo.findAll().get(indexFrom), repo.findAll().get(indexTo));
 
