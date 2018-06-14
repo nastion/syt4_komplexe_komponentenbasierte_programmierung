@@ -22,6 +22,7 @@
     <a class="nav-link" th:if="${logged_in == null}" th:href="@{/login}">Einloggen</a>
     <a class="nav-link" th:if="${logged_in == null}" th:href="@{/register}">Registrieren</a>
     <a class="nav-link" th:if="${logged_in}" th:href="@{/logout}">Ausloggen</a>
+    <a class="nav-link" th:if="${logged_in}" th:href="@{/unregister}">Diesen Benutzer löschen</a>
 </nav>
 <div class="container">
     <table class="table table-striped container" >
