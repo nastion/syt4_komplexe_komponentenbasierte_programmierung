@@ -12,7 +12,7 @@ public class Maestro implements Zahlung {
 	 *  
 	 */
 	public void zahlungDurchfuehren() {
-
+        System.out.println("Zahlung über Maestro");
 	}
 
 }

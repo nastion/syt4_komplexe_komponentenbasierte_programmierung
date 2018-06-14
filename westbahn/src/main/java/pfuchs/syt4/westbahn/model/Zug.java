@@ -10,7 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Zug {	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
 	private Long Id;
 
 	private Date startZeit;

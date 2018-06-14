@@ -8,7 +8,7 @@ import java.util.Date;
 @Entity
 public class Reservierung {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
 	private Long Id;
 
     @FutureOrPresent

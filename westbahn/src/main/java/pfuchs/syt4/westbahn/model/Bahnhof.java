@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Bahnhof {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
 	private Long Id;
 	
 	@Size(min=2, max=150)

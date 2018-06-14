@@ -45,11 +45,28 @@ public class SearchController {
             Bahnhof salzburg = new Bahnhof("Salzburg", 26, 300, 180, true);
             repo.save(salzburg);
 
-            Zug wien_salzburg = new Zug(westbhf, salzburg);
-            zugRepo.save(wien_salzburg);
-            Zug salzburg_wien = new Zug(salzburg, westbhf);
-            zugRepo.save(salzburg_wien);
         }
+        Bahnhof westbhf = repo.findByName("Wien Westbhf");
+        Bahnhof salzburg = repo.findByName("Salzburg");
+
+        zugRepo.deleteAll();
+        if (zugRepo.findAll().size()==0)
+            for (int i = 0; i < 7; ++i) {
+                Zug wien_salzburg = new Zug(westbhf, salzburg);
+                Zug salzburg_wien = new Zug(salzburg, westbhf);
+                Calendar today = Calendar.getInstance();
+                today.set(Calendar.DATE, today.get(Calendar.DATE)+i);
+                today.set(Calendar.HOUR_OF_DAY, 15);
+                today.set(Calendar.MINUTE, 30);
+                today.set(Calendar.SECOND, 0);
+                today.set(Calendar.MILLISECOND, 0);
+                wien_salzburg.setStartZeit(today.getTime());
+                today.set(Calendar.HOUR_OF_DAY, 19);
+                today.set(Calendar.MINUTE, 0);
+                salzburg_wien.setStartZeit(today.getTime());
+                zugRepo.save(wien_salzburg);
+                zugRepo.save(salzburg_wien);
+            }
 
         if (controller.is_logged_in())
             modelAndView.addObject("logged_in", true);

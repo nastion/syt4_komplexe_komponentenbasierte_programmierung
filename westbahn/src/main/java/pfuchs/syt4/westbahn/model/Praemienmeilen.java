@@ -12,7 +12,7 @@ public class Praemienmeilen implements Zahlung {
 	 *  
 	 */
 	public void zahlungDurchfuehren() {
-
+        System.out.println("Zahlung über Prämienmeilen");
 	}
 
 }

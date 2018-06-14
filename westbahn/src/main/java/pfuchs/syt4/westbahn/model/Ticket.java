@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Ticket {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     Long Id;
 
 	@OneToOne
@@ -47,4 +47,6 @@ public abstract class Ticket {
     public void setZahlung(Zahlung zahlung) {
         this.zahlung = zahlung;
     }
+
+    public abstract double preis();
 }

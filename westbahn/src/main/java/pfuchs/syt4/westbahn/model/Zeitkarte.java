@@ -32,4 +32,13 @@ public class Zeitkarte extends Ticket implements Serializable {
 		return "Ticket mit ID " + super.Id + " ist gültig ab " + gueltigAb.toString() + " und ist eine " + typ;
 	}
 
+	@Override
+    public double preis() {
+	    if (typ.equals(ZeitkartenTyp.JAHRESKARTE))
+	        return 449.99;
+	    else if (typ.equals(ZeitkartenTyp.MONATSKARTE))
+	        return 38.99;
+	    else return 9.99;
+    }
+
 }

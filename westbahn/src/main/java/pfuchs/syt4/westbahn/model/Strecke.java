@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Strecke {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
 	private Long Id;
 	
 	@NotNull

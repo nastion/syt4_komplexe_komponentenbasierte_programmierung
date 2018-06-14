@@ -1,7 +1,9 @@
 package pfuchs.syt4.westbahn.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -31,7 +33,7 @@ import javax.validation.constraints.Pattern;
 @Entity
 public class Benutzer implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
 
 	@NotNull
@@ -163,5 +165,12 @@ public class Benutzer implements Serializable {
 
     public void addTicket(Ticket ticket) {
 	    this.tickets.add(ticket);
+    }
+
+    public void removeTicket(Ticket ticket) {
+	    for (Ticket t : tickets)
+	        if (t.getId().equals(ticket.getId()))
+	            ticket = t;
+	    this.tickets.remove(ticket);
     }
 }

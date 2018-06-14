@@ -47,6 +47,8 @@ public class TicketshopController {
         if (zug != null)
             modelAndView.addObject("zug", zug);
 
+        if (controller.is_logged_in())
+            modelAndView.addObject("logged_in", true);
         Benutzer b = new Benutzer();
         modelAndView.addObject("user", b);
         Strecke strecke = new Strecke(from, to);
@@ -60,6 +62,8 @@ public class TicketshopController {
     public ModelAndView ticket(){
         ModelAndView modelAndView = new ModelAndView();
 
+        if (controller.is_logged_in())
+            modelAndView.addObject("logged_in", true);
         modelAndView.addObject("bahnhoefe", repo.findAll());
         modelAndView.setViewName("shop");
         return modelAndView;
@@ -81,6 +85,8 @@ public class TicketshopController {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         List<AuswahlZug> zeiten = addZuege(zuegeOnDay, zuegeInDirection, sdf, from, to);
 
+        if (controller.is_logged_in())
+            modelAndView.addObject("logged_in", true);
         modelAndView.addObject("zeiten", zeiten);
         modelAndView.addObject("bahnhoefe", repo.findAll());
         modelAndView.setViewName("shop");
@@ -91,6 +97,8 @@ public class TicketshopController {
     public ModelAndView zeitkarte() {
         ModelAndView modelAndView = new ModelAndView();
 
+        if (controller.is_logged_in())
+            modelAndView.addObject("logged_in", true);
         modelAndView.addObject("bahnhoefe", repo.findAll());
         modelAndView.setViewName("shop");
         return modelAndView;
@@ -131,25 +139,24 @@ public class TicketshopController {
             return "login";
         }
 
-        if (amount != null) {
-            for (int i = 0; i < Integer.parseInt(amount); ++i) {
-                Einzelticket einzelticket = new Einzelticket();
-                Bahnhof from = repo.findByName(fromString);
-                Bahnhof to = repo.findByName(toString);
-                Strecke strecke;
-                if (streckeRepo.findByStartAndEnde(from, to) == null) {
-                    strecke = new Strecke(from, to);
-                    streckeRepo.save(strecke);
-                } else strecke = streckeRepo.findByStartAndEnde(from, to);
-                if (ticketOption != null)
-                    if (ticketOption.equalsIgnoreCase("FAHRRAD"))
-                        einzelticket.setTicketOption(TicketOption.FAHRRAD);
-                    else einzelticket.setTicketOption(TicketOption.GROSSGEPAECK);
-                einzelticket.setStrecke(strecke);
-                this.controller.getLogged_in().addTicket(einzelticket);
-                ticketRepo.save(einzelticket);
-                benutzerRepo.save(this.controller.getLogged_in());
-            }
+    if (amount != null) {
+            Einzelticket einzelticket = new Einzelticket();
+            Bahnhof from = repo.findByName(fromString);
+            Bahnhof to = repo.findByName(toString);
+            Strecke strecke;
+            if (streckeRepo.findByStartAndEnde(from, to) == null) {
+                strecke = new Strecke(from, to);
+                streckeRepo.save(strecke);
+            } else strecke = streckeRepo.findByStartAndEnde(from, to);
+            if (ticketOption != null)
+                if (ticketOption.equalsIgnoreCase("FAHRRAD"))
+                    einzelticket.setTicketOption(TicketOption.FAHRRAD);
+                else einzelticket.setTicketOption(TicketOption.GROSSGEPAECK);
+            einzelticket.setStrecke(strecke);
+            einzelticket.setAnzahlPers(Integer.parseInt(amount));
+            ticketRepo.saveAndFlush(einzelticket);
+            this.controller.getLogged_in().addTicket(einzelticket);
+            benutzerRepo.saveAndFlush(this.controller.getLogged_in());
         } else if (resart != null) {
             Reservierung reservierung = new Reservierung();
             reservierung.setBenutzer(this.controller.getLogged_in());
@@ -182,6 +189,14 @@ public class TicketshopController {
             else if (zeitopt.equalsIgnoreCase("MONATSKARTE"))
                 zeitkarte.setTyp(ZeitkartenTyp.MONATSKARTE);
             else zeitkarte.setTyp(ZeitkartenTyp.WOCHENKARTE);
+            Bahnhof from = repo.findByName(fromString);
+            Bahnhof to = repo.findByName(toString);
+            Strecke strecke;
+            if (streckeRepo.findByStartAndEnde(from, to) == null) {
+                strecke = new Strecke(from, to);
+                streckeRepo.save(strecke);
+            } else strecke = streckeRepo.findByStartAndEnde(from, to);
+            zeitkarte.setStrecke(strecke);
             this.controller.getLogged_in().addTicket(zeitkarte);
             ticketRepo.save(zeitkarte);
             benutzerRepo.save(this.controller.getLogged_in());

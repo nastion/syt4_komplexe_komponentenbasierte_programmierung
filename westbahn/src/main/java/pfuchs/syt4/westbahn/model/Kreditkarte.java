@@ -12,7 +12,7 @@ public class Kreditkarte implements Zahlung {
 	 *  
 	 */
 	public void zahlungDurchfuehren() {
-
+        System.out.println("Zahlung über Kreditkarte");
 	}
 
 }
