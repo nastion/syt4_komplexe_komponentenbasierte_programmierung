@@ -7,15 +7,12 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Strecke {
 	@Id
-	@GeneratedValue
-	private Long ID;
+    @GeneratedValue
+	private Long Id;
 	
 	@NotNull
 	@OneToOne
 	private Bahnhof start;
-
-	@OneToOne
-	private Bahnhof bahnhof;
 
 	@NotNull
 	@OneToOne
@@ -26,15 +23,35 @@ public class Strecke {
 
 	public Strecke() {}
 	public Strecke(Bahnhof start, Bahnhof ende) {
-		this(start, ende, null);
-	}
-	public Strecke(Bahnhof start, Bahnhof ende, Bahnhof bahnhof) {
 		this.start = start;
 		this.ende = ende;
-		this.bahnhof = bahnhof;
 		this.endeIsStart = this.ende.getName().equals(this.start.getName());
 	}
 	public String getEndbahnhof() {
 		return ende.getName();
 	}
+
+    public Long getID() {
+        return Id;
+    }
+
+    public void setID(Long ID) {
+        this.Id = ID;
+    }
+
+    public Bahnhof getStart() {
+        return start;
+    }
+
+    public void setStart(Bahnhof start) {
+        this.start = start;
+    }
+
+    public Bahnhof getEnde() {
+        return ende;
+    }
+
+    public void setEnde(Bahnhof ende) {
+        this.ende = ende;
+    }
 }

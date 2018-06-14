@@ -12,8 +12,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Bahnhof {
 	@Id
-	@GeneratedValue
-	private Long ID;
+    @GeneratedValue
+	private Long Id;
 	
 	@Size(min=2, max=150)
 	@Pattern(regexp="^[\\p{L} .'-]+$", message="Ungültiger Name für den Bahnhof")
@@ -52,5 +52,43 @@ public class Bahnhof {
 	public String getName() {
 		return name;
 	}
+
+    public Long getID() {
+        return Id;
+    }
+
+    public void setID(Long ID) {
+        this.Id = ID;
+    }
+
+    public int getAbsPreisEntfernung() {
+        return absPreisEntfernung;
+    }
+
+    public void setAbsPreisEntfernung(int absPreisEntfernung) {
+        this.absPreisEntfernung = absPreisEntfernung;
+    }
+
+    public int getAbsKmEntfernung() {
+        return absKmEntfernung;
+    }
+
+    public void setAbsKmEntfernung(int absKmEntfernung) {
+        this.absKmEntfernung = absKmEntfernung;
+    }
+
+    public int getAbsZeitEntfernung() {
+        return absZeitEntfernung;
+    }
+
+    public void setAbsZeitEntfernung(int absZeitEntfernung) {
+        this.absZeitEntfernung = absZeitEntfernung;
+    }
+
+    public boolean isKopfBahnhof() {
+        return kopfBahnhof;
+    }
+
+    public void setName(String name) { this.name = name; }
 	
 }

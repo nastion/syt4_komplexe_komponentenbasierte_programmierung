@@ -1,0 +1,33 @@
+.nav-link.active {
+    border-bottom: 5px solid olivedrab;
+}
+
+.nav-link {
+    margin: auto;
+}
+
+#data div label {
+    font-weight: bold;
+}
+
+#data form {
+    display: grid;
+}
+
+#data form label {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+#data h3+div {
+    display: grid;
+    text-align: center;
+}
+
+.numeric {
+    text-align: right;
+}
+
+.container {
+    overflow: auto;
+}

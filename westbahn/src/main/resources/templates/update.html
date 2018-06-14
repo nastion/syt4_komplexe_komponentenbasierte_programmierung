@@ -1,0 +1,14 @@
+<tr th:each="zug,iter : ${zuege}" xmlns:th="http://www.thymeleaf.org">
+    <td th:text="${strecke.start.name}"></td>
+    <td th:text="${strecke.ende.name}"></td>
+    <td th:text="${abfahrten[iter.index]}"></td>
+    <td th:text="${dauern[iter.index]}"></td>
+    <td>
+        <form th:action="@{/shop}" method="post">
+            <input type="text" style="display:none" th:value="${strecke.start.name}" id="fromString" name="fromString" />
+            <input type="text" style="display:none" th:value="${strecke.ende.name}" id="toString" name="toString" />
+            <input type="text" style="display:none" th:value="${zug.Id}" id="zugId" name="zugId" />
+            <input type="submit" value="Bestellen" />
+        </form>
+    </td>
+</tr>

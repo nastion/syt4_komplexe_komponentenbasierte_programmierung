@@ -1,0 +1,3 @@
+<select id="zug" name="zug" required>
+    <option th:each="zug : ${zeiten}" th:text="${zug.startZeit} + '-' + ${zug.endZeit}" th:value="${zug.zug.Id}"></option>
+</select>

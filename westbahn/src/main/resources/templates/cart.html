@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Warenkorb</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<nav class="nav">
+    <a class="nav-link" th:href="@{/search}">Suchen</a>
+    <a class="nav-link" th:href="@{/shop}">Shop</a>
+    <a class="nav-link active" th:href="@{/cart}">Warenkorb</a>
+    <a class="nav-link" th:href="@{/logout}">Ausloggen</a>
+    <a class="nav-link" th:href="@{/unregister}">Diesen Benutzer löschen</a>
+</nav>
+<div class="container">
+    <div id="data">
+        <script>
+            document.getElementById("data").style.maxHeight = window.innerHeight-100+"px";
+        </script>
+        <h3>Tickets</h3>
+        <div style="grid-template-columns: auto auto auto 100px;">
+            <label>Von</label>
+            <label>Nach</label>
+            <label>Preis</label>
+        </div>
+        <form method="post" th:if="${ticket instanceof T(pfuchs.syt4.westbahn.model.Einzelticket)}"
+              th:action="@{/cart/submit}" style="grid-template-columns: auto auto auto 100px;" th:each="ticket : ${tickets}">
+            <label th:text="${ticket.strecke.start.name}"></label>
+            <label th:text="${ticket.strecke.ende.name}"></label>
+            <label class="numeric" th:text="${ticket.preis()}"></label>
+            <input name="id" th:value="${ticket.Id}" style="display:none" />
+            <input type="submit" class="form-control" value="Bezahlen" />
+        </form>
+        <h3>Reservierungen</h3>
+        <div style="grid-template-columns: auto auto auto 100px;">
+            <label>Von</label>
+            <label>Nach</label>
+            <label>Datum</label>
+        </div>
+        <form method="post" th:action="@{/cart/submit?reservierung}" style="grid-template-columns: auto auto auto 100px;" th:each="reservierung : ${reservierungen}">
+            <label th:text="${reservierung.strecke.start.name}"></label>
+            <label th:text="${reservierung.strecke.ende.name}"></label>
+            <label th:text="${reservierung.zug.startZeit}"></label>
+            <input name="id" th:value="${reservierung.Id}" style="display:none" />
+            <input type="submit" class="form-control" value="Bezahlen" />
+        </form>
+        <h3>Zeitkarten</h3>
+        <div style="grid-template-columns: auto auto auto auto 100px;">
+            <label>Von</label>
+            <label>Nach</label>
+            <label>Typ</label>
+            <label>Preis</label>
+        </div>
+        <form method="post" th:if="${ticket instanceof T(pfuchs.syt4.westbahn.model.Zeitkarte)}"
+              th:action="@{/cart/submit}" style="grid-template-columns: auto auto auto auto 100px;" th:each="ticket : ${tickets}">
+            <label th:text="${ticket.strecke.start.name}"></label>
+            <label th:text="${ticket.strecke.ende.name}"></label>
+            <label th:text="${ticket.typ}"></label>
+            <label class="numeric" th:text="${ticket.preis()}"></label>
+            <input name="id" th:value="${ticket.Id}" style="display:none" />
+            <input type="submit" class="form-control" value="Bezahlen" />
+        </form>
+    </div>
+    <!--
+    <input type="button" class="ml-auto form-control" value="Alle bezahlen" onclick="window.location.href='localhost:8080/cart/checkoutall'" />
+    -->
+</div>
+</body>
+</html>

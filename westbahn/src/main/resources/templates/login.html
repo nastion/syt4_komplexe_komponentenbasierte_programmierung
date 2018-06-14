@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<nav class="nav">
+    <a class="nav-link" th:href="@{/search}">Suchen</a>
+    <a class="nav-link" th:href="@{/shop}">Shop</a>
+    <a class="nav-link" th:href="@{/cart}">Warenkorb</a>
+    <a class="nav-link active" th:href="@{/login}">Einloggen</a>
+    <a class="nav-link" th:href="@{/register}">Registrieren</a>
+</nav>
+<div class="container">
+    <form action="#" th:action="@{/login}" th:object="${user}" method="POST" class="form-signin">
+        <input type="text" th:placeholder="Email" th:field="*{eMail}" class="form-control" /> <br/>
+        <input type="password"  th:placeholder="Password" th:field="*{passwort}" class="form-control" /> <br />
+
+        <div align="center" th:if="${param.error}">
+            <p style="font-size: 14pt; color: #FF1C19;">Email or Password invalid, please verify</p>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="submit">Login</button><br />
+        <a th:href="@{/register}">Register</a>
+    </form>
+</div>
+</body>
+</html>

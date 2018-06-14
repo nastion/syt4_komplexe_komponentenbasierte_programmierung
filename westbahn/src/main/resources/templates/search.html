@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}"></script>
+</head>
+<body>
+<nav class="nav">
+    <a class="nav-link active" th:href="@{/search}">Suchen</a>
+    <a class="nav-link" th:href="@{/shop}">Shop</a>
+    <a class="nav-link" th:href="@{/cart}">Warenkorb</a>
+    <a class="nav-link" th:if="${logged_in == null}" th:href="@{/login}">Einloggen</a>
+    <a class="nav-link" th:if="${logged_in == null}" th:href="@{/register}">Registrieren</a>
+    <a class="nav-link" th:if="${logged_in}" th:href="@{/logout}">Ausloggen</a>
+    <a class="nav-link" th:if="${logged_in}" th:href="@{/unregister}">Diesen Benutzer löschen</a>
+</nav>
+<div class="container">
+    <table class="table table-striped container" >
+        <thead>
+        <tr>
+            <td>
+                <label for="from">Von: </label>
+                <select id="from" class="form-control" onchange="getData('/update/search', 'data')">
+                    <option th:each="bahnhof : ${bahnhoefe}" th:text="${bahnhof.name}"></option>
+                </select>
+            </td>
+            <td>
+                <label for="to">Nach: </label>
+                <select id="to" class="form-control" onchange="getData('/update/search', 'data')">
+                    <option th:each="bahnhof,iter : ${bahnhoefe}" th:text="${bahnhof.name}" th:selected="${iter.index}==1"></option>
+                </select>
+            </td>
+            <td th:if="${logged_in}">
+                <label for="datePicker">Am: </label>
+                <input type="date" id="datePicker" class="form-control"/>
+                <script>document.getElementById('datePicker').value = new Date().toDateInputValue();</script>
+            </td>
+        </tr>
+        <tr>
+            <th>Startbahnhof</th>
+            <th>Endbahnhof</th>
+            <th>Abfahrt</th>
+            <th>Dauer</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="data">
+            <script>
+                getData('/update/search', 'data');
+            </script>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

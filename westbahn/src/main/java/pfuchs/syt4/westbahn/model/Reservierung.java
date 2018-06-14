@@ -1,18 +1,17 @@
 package pfuchs.syt4.westbahn.model;
 
-import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
-import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 public class Reservierung {
     @Id
     @GeneratedValue
-	private Long ID;
+	private Long Id;
 
-    @Future
+    @FutureOrPresent
 	private Date datum;
 
 	private int praemienMeilenBonus = 15;
@@ -22,16 +21,21 @@ public class Reservierung {
 	@Enumerated
 	private StatusInfo status;
 
+	@Embedded
+    private Reservierungsart reservierungsart;
+
 	@ManyToOne
 	private Zug zug;
 
 	@ManyToOne
+    @NotNull
 	private Strecke strecke;
 
 	@OneToOne
+    @NotNull
 	private Benutzer benutzer;
 
-	@OneToOne
+	@Embedded
 	private Zahlung zahlung;
 
 	public Reservierung() {}
@@ -61,4 +65,80 @@ public class Reservierung {
 	public Benutzer getBenutzer() {
 		return this.benutzer;
 	}
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public Date getDatum() {
+        return datum;
+    }
+
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
+
+    public int getPraemienMeilenBonus() {
+        return praemienMeilenBonus;
+    }
+
+    public void setPraemienMeilenBonus(int praemienMeilenBonus) {
+        this.praemienMeilenBonus = praemienMeilenBonus;
+    }
+
+    public int getPreis() {
+        return preis;
+    }
+
+    public void setPreis(int preis) {
+        this.preis = preis;
+    }
+
+    public StatusInfo getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusInfo status) {
+        this.status = status;
+    }
+
+    public Zug getZug() {
+        return zug;
+    }
+
+    public void setZug(Zug zug) {
+        this.zug = zug;
+    }
+
+    public Strecke getStrecke() {
+        return strecke;
+    }
+
+    public void setStrecke(Strecke strecke) {
+        this.strecke = strecke;
+    }
+
+    public void setBenutzer(Benutzer benutzer) {
+        this.benutzer = benutzer;
+    }
+
+    public Zahlung getZahlung() {
+        return zahlung;
+    }
+
+    public void setZahlung(Zahlung zahlung) {
+        this.zahlung = zahlung;
+    }
+
+    public Reservierungsart getReservierungsart() {
+        return reservierungsart;
+    }
+
+    public void setReservierungsart(Reservierungsart reservierungsart) {
+        this.reservierungsart = reservierungsart;
+    }
 }
